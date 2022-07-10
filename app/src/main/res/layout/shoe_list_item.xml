@@ -11,11 +11,11 @@
             android:layout_height="0dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="18dp"
+            android:contentDescription="@string/list_item_image"
             android:scaleType="fitXY"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/img_login_welcome"
-            android:contentDescription="@string/list_item_image" />
+            app:srcCompat="@drawable/img_login_welcome" />
 
         <TextView
             android:id="@+id/tv_shoe_name"
@@ -25,7 +25,8 @@
             android:layout_marginTop="18dp"
             android:layout_marginEnd="8dp"
             android:text="@string/shoe_name"
-            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:textSize="25sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/iv_shoe_image"
@@ -39,6 +40,8 @@
             android:layout_marginTop="0dp"
             android:layout_marginEnd="8dp"
             android:text="@string/company"
+            android:textColor="@color/black"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/iv_shoe_image"
             app:layout_constraintTop_toBottomOf="@+id/tv_shoe_name" />
@@ -51,6 +54,7 @@
             android:layout_marginTop="0dp"
             android:layout_marginEnd="8dp"
             android:text="@string/shoe_size"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/iv_shoe_image"
             app:layout_constraintTop_toBottomOf="@+id/tv_shoe_company" />
@@ -63,6 +67,7 @@
             android:layout_marginTop="0dp"
             android:layout_marginEnd="8dp"
             android:text="@string/description"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/iv_shoe_image"
             app:layout_constraintTop_toBottomOf="@+id/tv_shoe_size" />
