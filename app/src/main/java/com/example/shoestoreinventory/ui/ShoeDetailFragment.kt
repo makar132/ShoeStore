@@ -1,4 +1,4 @@
-package com.example.shoestoreinventory
+package com.example.shoestoreinventory.ui
 
 import android.Manifest
 import android.app.Activity
@@ -12,14 +12,16 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.shoestoreinventory.R
+import com.example.shoestoreinventory.MainActivityViewModel
 import com.example.shoestoreinventory.databinding.FragmentShoeDetailBinding
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
@@ -27,7 +29,7 @@ import kotlinx.coroutines.async
 
 class ShoeDetailFragment : Fragment() {
     lateinit var binding: FragmentShoeDetailBinding
-    private val viewModel: SharedViewModel by activityViewModels()
+    private val viewModel: MainActivityViewModel by activityViewModels()
     val REQUEST_CAMERA_CODE = 1
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,27 +41,34 @@ class ShoeDetailFragment : Fragment() {
         binding.shoe = viewModel.shoe
         (activity as AppCompatActivity).supportActionBar?.show()
         (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        viewModel.onShoeImageChanged(binding.ivShoeImage)
-        viewModel.onShoeImageChangedComplete(binding.ivShoeImage)
+        viewModel.onShoeDetailChooseFromSavedClick(binding.ivShoeImage)
+        viewModel.onShoeImageChangedSuccess(binding.ivShoeImage)
+        binding.tietShoeSize.setAdapter(
+            ArrayAdapter<String>(
+                requireContext(),
+                R.layout.shoe_size_dropdowm_item,
+                viewModel.shoe.size_list
+            )
+        )
         observe()
         return binding.root
 
     }
 
     private fun observe() {
-        viewModel.eventSaveShoePress.observe(viewLifecycleOwner) {
+        viewModel.shoeDetailSaveClicked.observe(viewLifecycleOwner) {
             if (it) {
-                cancel()
-                viewModel.onSaveShoePressComplete()
+                findNavController().popBackStack()
+                viewModel.onShoeDetailSaveClickSuccess()
             }
         }
-        viewModel.eventCancelPress.observe(viewLifecycleOwner) {
+        viewModel.shoeDetailCancelClicked.observe(viewLifecycleOwner) {
             if (it) {
-                cancel()
-                viewModel.onCancelPressComplete()
+                findNavController().popBackStack()
+                viewModel.onShoeDetailCancelClickSuccess()
             }
         }
-        viewModel.eventSaveShoeError.observe(viewLifecycleOwner) {
+        viewModel.shoeDetailSaveErrorRaise.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 val dialogBuilder = AlertDialog.Builder(context)
                     .setTitle("Missing Information")
@@ -70,10 +79,10 @@ class ShoeDetailFragment : Fragment() {
                     .setMessage(it)
                 val dialog = dialogBuilder.create()
                 dialog.show()
-                viewModel.clearError()
+                viewModel.onShoeDetailErrorRaiseSuccess()
             }
         }
-        viewModel.eventShoeImageChange.observe(viewLifecycleOwner) {
+        viewModel.shoeDetailImageChanged.observe(viewLifecycleOwner) {
             if (it) {
 
                 when (viewModel.shoeImageIndex.value) {
@@ -83,13 +92,13 @@ class ShoeDetailFragment : Fragment() {
                     3 -> binding.ivShoeImage.setImageResource(R.drawable.shoe_img_4)
                     4 -> binding.ivShoeImage.setImageResource(R.drawable.shoe_img_5)
                 }
-                viewModel.onShoeImageChangedComplete(binding.ivShoeImage)
+                viewModel.onShoeImageChangedSuccess(binding.ivShoeImage)
             }
         }
-        viewModel.eventTakeShoeImage.observe(viewLifecycleOwner) {
+        viewModel.shoeDetailShoeImageTaken.observe(viewLifecycleOwner) {
             if (it) {
                 takePhoto()
-                viewModel.onTakeShoeImageComplete()
+                viewModel.onShoeDetailTakeShoeImageClickSuccess()
             }
         }
     }
@@ -116,9 +125,6 @@ class ShoeDetailFragment : Fragment() {
 
     }
 
-    private fun cancel() {
-        findNavController().popBackStack()
-    }
 
     override fun onDestroy() {
         super.onDestroy()
@@ -136,7 +142,7 @@ class ShoeDetailFragment : Fragment() {
                  * */
                 Toast.makeText(context, "Photo Taken", Toast.LENGTH_LONG).show()
                 binding.ivShoeImage.setImageBitmap((data?.extras?.get("data") as Bitmap))
-                viewModel.onShoeImageChangedComplete(binding.ivShoeImage)
+                viewModel.onShoeImageChangedSuccess(binding.ivShoeImage)
 
             }
         }

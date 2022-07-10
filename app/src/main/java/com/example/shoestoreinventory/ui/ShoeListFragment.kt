@@ -1,4 +1,4 @@
-package com.example.shoestoreinventory
+package com.example.shoestoreinventory.ui
 
 import android.os.Bundle
 import android.view.*
@@ -7,8 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.shoestoreinventory.R
+import com.example.shoestoreinventory.MainActivityViewModel
 import com.example.shoestoreinventory.databinding.FragmentShoeListBinding
 import com.example.shoestoreinventory.databinding.ShoeListItemBinding
 import com.example.shoestoreinventory.models.PrefManager
@@ -16,7 +17,7 @@ import com.example.shoestoreinventory.models.Shoe
 
 class ShoeListFragment : Fragment() {
     lateinit var binding: FragmentShoeListBinding
-    private val viewModel: SharedViewModel by activityViewModels()
+    private val viewModel: MainActivityViewModel by activityViewModels()
     lateinit var prefManager: PrefManager
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,13 +38,13 @@ class ShoeListFragment : Fragment() {
     }
 
     private fun observe() {
-        viewModel.eventAddShoePress.observe(viewLifecycleOwner) {
+        viewModel.shoeListAddShoeClicked.observe(viewLifecycleOwner) {
             it?.let {
                 if (it) {
                     findNavController().navigate(
                         ShoeListFragmentDirections.actionShoeListFragmentToShoeDetailFragment()
                     )
-                    viewModel.onAddShoePressComplete()
+                    viewModel.onShoeListAddShoeClickSuccess()
                 }
             }
         }
@@ -83,15 +84,13 @@ class ShoeListFragment : Fragment() {
         when (item.itemId) {
             R.id.logout -> {
                 prefManager.logout()
-        findNavController().navigate(R.id.action_shoeListFragment_to_loginFragment)
+                findNavController().navigate(R.id.action_shoeListFragment_to_loginFragment)
             }
         }
         return super.onOptionsItemSelected(item)
     }
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
-    }
+
 
 
 }

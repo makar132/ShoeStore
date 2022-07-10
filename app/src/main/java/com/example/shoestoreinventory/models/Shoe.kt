@@ -15,5 +15,6 @@ data class Shoe(
     var size: String,
     var company: String,
     var description: String,
-    var image: Bitmap
+    var image: Bitmap,
+    val size_list: List<String> = listOf("9","10","11","12")
 ) : Parcelable

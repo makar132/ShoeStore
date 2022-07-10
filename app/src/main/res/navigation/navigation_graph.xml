@@ -7,63 +7,92 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.shoestoreinventory.LoginFragment"
+        android:name="com.example.shoestoreinventory.ui.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_loginFragment_to_welcomeFragment"
             app:destination="@id/welcomeFragment"
+            app:enterAnim="@anim/animate_slide_down_enter"
+            app:exitAnim="@anim/animate_slide_down_exit"
+            app:popEnterAnim="@anim/animate_slide_down_enter"
+            app:popExitAnim="@anim/animate_slide_down_exit"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_loginFragment_to_shoeListFragment"
             app:destination="@id/shoeListFragment"
+            app:enterAnim="@anim/animate_zoom_enter"
+            app:exitAnim="@anim/animate_shrink_exit"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/welcomeFragment"
-        android:name="com.example.shoestoreinventory.WelcomeFragment"
+        android:name="com.example.shoestoreinventory.ui.WelcomeFragment"
         android:label="fragment_welcome"
         tools:layout="@layout/fragment_welcome" >
         <action
             android:id="@+id/action_welcomeFragment_to_instructionsFragment"
-            app:destination="@id/instructionsFragment"
-            app:popUpTo="@id/welcomeFragment"
-            app:popUpToInclusive="true" />
+            app:destination="@id/instructionsShoeListFragment"
+            app:enterAnim="@anim/animate_slide_left_enter"
+            app:exitAnim="@anim/animate_slide_left_exit"
+            app:popEnterAnim="@anim/from_left_in"
+            app:popExitAnim="@anim/from_right_out"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/shoeListFragment"
-        android:name="com.example.shoestoreinventory.ShoeListFragment"
+        android:name="com.example.shoestoreinventory.ui.ShoeListFragment"
         android:label="fragment_shoe_list"
         tools:layout="@layout/fragment_shoe_list" >
         <action
             android:id="@+id/action_shoeListFragment_to_shoeDetailFragment"
-            app:destination="@id/shoeDetailFragment" />
+            app:destination="@id/shoeDetailFragment"
+            app:enterAnim="@anim/animate_slide_left_enter"
+            app:exitAnim="@anim/animate_slide_left_exit"
+            app:popEnterAnim="@anim/from_left_in"
+            app:popExitAnim="@anim/from_right_out" />
         <action
             android:id="@+id/action_shoeListFragment_to_loginFragment"
             app:destination="@id/loginFragment"
+            app:enterAnim="@anim/animate_zoom_enter"
+            app:exitAnim="@anim/animate_shrink_exit"
             app:popUpTo="@id/shoeListFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
-        android:id="@+id/instructionsFragment"
-        android:name="com.example.shoestoreinventory.InstructionsFragment"
-        android:label="fragment_instructions"
-        tools:layout="@layout/fragment_instructions" >
+        android:id="@+id/instructionsShoeListFragment"
+        android:name="com.example.shoestoreinventory.ui.InstructionsShoeListFragment"
+        android:label="fragment_instructions_shoe_list"
+        tools:layout="@layout/fragment_instructions_shoe_list">
         <action
-            android:id="@+id/action_instructionsFragment_to_shoeListFragment"
-            app:destination="@id/shoeListFragment"
-            app:popUpTo="@id/instructionsFragment"
-            app:popUpToInclusive="true" />
+            android:id="@+id/action_instructionsFragment_to_instructionsShoeDetailFragment"
+            app:destination="@id/instructionsShoeDetailFragment"
+            app:enterAnim="@anim/animate_slide_left_enter"
+            app:exitAnim="@anim/animate_slide_left_exit"
+            app:popEnterAnim="@anim/from_left_in"
+            app:popExitAnim="@anim/from_right_out"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/shoeDetailFragment"
-        android:name="com.example.shoestoreinventory.ShoeDetailFragment"
+        android:name="com.example.shoestoreinventory.ui.ShoeDetailFragment"
         android:label="fragment_shoe_detail"
-        tools:layout="@layout/fragment_shoe_detail" >
+        tools:layout="@layout/fragment_shoe_detail" />
+    <fragment
+        android:id="@+id/instructionsShoeDetailFragment"
+        android:name="com.example.shoestoreinventory.ui.InstructionsShoeDetailFragment"
+        android:label="fragment_instructions_shoe_detail"
+        tools:layout="@layout/fragment_instructions_shoe_detail" >
         <action
-            android:id="@+id/action_shoeDetailFragment_to_shoeListFragment"
-            app:destination="@id/shoeListFragment" />
+            android:id="@+id/action_instructionsShoeDetailFragment_to_shoeListFragment"
+            app:destination="@id/shoeListFragment"
+            app:enterAnim="@anim/animate_zoom_enter"
+            app:exitAnim="@anim/animate_shrink_exit"
+            app:popEnterAnim="@anim/animate_zoom_enter"
+            app:popExitAnim="@anim/animate_shrink_exit"
+            app:popUpTo="@id/welcomeFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

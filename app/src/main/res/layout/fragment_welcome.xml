@@ -7,31 +7,30 @@
 
         <variable
             name="viewmodel"
-            type="com.example.shoestoreinventory.SharedViewModel" />
+            type="com.example.shoestoreinventory.MainActivityViewModel" />
     </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <!-- simple layout,LinearLayout is sufficient -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".WelcomeFragment">
+        android:orientation="vertical"
+        tools:context=".ui.WelcomeFragment">
 
         <ImageView
             android:id="@+id/iv_welcome_img"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="450dp"
+            android:contentDescription="@string/welcome_image"
             android:scaleType="centerCrop"
-            android:src="@drawable/img_welcome_foreground"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:src="@drawable/img_login_welcome" />
 
         <TextView
             android:id="@+id/tv_welcome_title"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="150dp"
+            android:layout_marginBottom="20dp"
             android:gravity="center"
-            android:text="Welcome!"
+            android:text="@string/welcome"
             android:textSize="50sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -40,24 +39,32 @@
 
         <TextView
             android:id="@+id/tv_welcome_sub"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
             android:gravity="center"
-            android:text="to the Shoes Store Inventory App"
+            android:text="@string/to_the_shoes_store_inventory_app"
             android:textSize="25sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_welcome_title" />
+        <!-- just a space filler -->
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+        <!-- just a space filler -->
 
         <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_button_background"
             android:backgroundTint="@color/colorPrimary"
+            android:onClick="@{()->viewmodel.onWelcomeNextClick()}"
             android:text="@string/next"
-            android:onClick="@{()->viewmodel.onWelcome()}"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </layout>

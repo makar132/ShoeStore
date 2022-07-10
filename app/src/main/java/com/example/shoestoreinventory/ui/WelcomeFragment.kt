@@ -1,4 +1,4 @@
-package com.example.shoestoreinventory
+package com.example.shoestoreinventory.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,14 +7,15 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.shoestoreinventory.R
+import com.example.shoestoreinventory.MainActivityViewModel
 import com.example.shoestoreinventory.databinding.FragmentWelcomeBinding
 
 
 class WelcomeFragment : Fragment() {
     lateinit var binding: FragmentWelcomeBinding
-    private val viewModel: SharedViewModel by activityViewModels()
+    private val viewModel: MainActivityViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -27,10 +28,10 @@ class WelcomeFragment : Fragment() {
     }
 
     private fun observe() {
-        viewModel.eventWelcome.observe(viewLifecycleOwner) {
+        viewModel.welcomeNextClicked.observe(viewLifecycleOwner) {
             if (it) {
                 findNavController().navigate(WelcomeFragmentDirections.actionWelcomeFragmentToInstructionsFragment())
-                viewModel.onWelcomeComplete()
+                viewModel.onWelcomeNextClickSuccess()
             }
 
         }

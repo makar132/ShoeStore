@@ -1,25 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.example.shoestoreinventory.MainActivityViewModel" />
+
+        <variable
+            name="shoe"
+            type="com.example.shoestoreinventory.models.Shoe" />
+
+    </data>
+    <!-- complex layout orientation changes over view groups so ConstraintLayout is better here -->
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ShoeDetailFragment">
+        tools:context=".ui.ShoeDetailFragment">
 
         <ImageView
             android:id="@+id/iv_shoe_image"
             android:layout_width="0dp"
             android:layout_height="150dp"
-            android:onClick="@{(view)->viewmodel.onShoeImageChanged(view)}"
+            android:contentDescription="@string/shoe_image"
+            android:onClick="@{(view)->viewmodel.onShoeDetailChooseFromSavedClick(view)}"
             android:scaleType="centerInside"
             android:src="@drawable/shoe_img_1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_take_picture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/bg_button_background"
+            android:backgroundTint="@color/colorPrimary"
+            android:onClick="@{()->viewmodel.onShoeDetailTakeShoeImageClick()}"
+            android:padding="10dp"
+            android:text="@string/take_a_picture"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_shoe_image" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:text="@string/or"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@+id/btn_choose_picture_from_saved_photos"
+            app:layout_constraintStart_toEndOf="@+id/btn_take_picture"
+            app:layout_constraintTop_toBottomOf="@+id/iv_shoe_image" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_choose_picture_from_saved_photos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/bg_button_background"
+            android:backgroundTint="@color/colorPrimary"
+            android:onClick="@{(view)->viewmodel.onShoeDetailChooseFromSavedClick(view)}"
+            android:padding="10dp"
+
+            android:text="@string/choose_from_saved_photos"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_shoe_image" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_shoe_name"
@@ -30,7 +80,7 @@
             android:layout_marginTop="30dp"
             android:layout_marginEnd="15dp"
             android:layout_marginBottom="50dp"
-            android:hint="Shoe Name"
+            android:hint="@string/shoe_name"
             app:boxStrokeColor="@color/colorAccent"
             app:hintTextColor="@color/colorAccent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -54,10 +104,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="25dp"
             android:layout_marginEnd="15dp"
             android:layout_marginBottom="50dp"
-            android:hint="Company"
+            android:hint="@string/company"
             app:boxStrokeColor="@color/colorAccent"
             app:hintTextColor="@color/colorAccent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -77,28 +127,29 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_shoe_size"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="25dp"
             android:layout_marginEnd="15dp"
             android:layout_marginBottom="50dp"
-            android:hint="Shoe Size"
+            android:hint="@string/shoe_size"
             app:boxStrokeColor="@color/colorAccent"
             app:hintTextColor="@color/colorAccent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+
             app:layout_constraintTop_toBottomOf="@id/til_company_name">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <AutoCompleteTextView
                 android:id="@+id/tiet_shoe_size"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
+                android:inputType="none"
                 android:text="@={shoe.size}"
 
-                />
+                tools:ignore="LabelFor" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -108,10 +159,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="25dp"
             android:layout_marginEnd="15dp"
             android:layout_marginBottom="50dp"
-            android:hint="Description (optional)"
+            android:hint="@string/description_optional"
             app:boxStrokeColor="@color/colorAccent"
             app:hintTextColor="@color/colorAccent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -135,8 +186,8 @@
             android:layout_height="wrap_content"
             android:background="@drawable/bg_button_background"
             android:backgroundTint="@color/colorPrimary"
-            android:onClick="@{()->viewmodel.onSaveShoePress()}"
-            android:text="save"
+            android:onClick="@{()->viewmodel.onShoeDetailSaveClick()}"
+            android:text="@string/save"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -146,36 +197,11 @@
             android:layout_height="wrap_content"
             android:background="@drawable/bg_button_background"
             android:backgroundTint="@color/colorPrimary"
-            android:onClick="@{()->viewmodel.onCancelPress()}"
-            android:text="cancel"
+            android:onClick="@{()->viewmodel.onShoeDetailCancelClick()}"
+            android:text="@string/cancel"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_take_picture"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_button_background"
-            android:backgroundTint="@color/colorPrimary"
-            android:padding="15dp"
-            android:layout_marginTop="25dp"
-            android:text="Take a picture"
-            android:onClick="@{()->viewmodel.onTakeShoeImage()}"
-            android:textColor="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_shoe_image" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <data>
-
-        <variable
-            name="viewmodel"
-            type="com.example.shoestoreinventory.SharedViewModel" />
-
-        <variable
-            name="shoe"
-            type="com.example.shoestoreinventory.models.Shoe" />
-
-    </data>
 </layout>
