@@ -8,8 +8,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.example.shoestoreinventory.R
 import com.example.shoestoreinventory.MainActivityViewModel
+import com.example.shoestoreinventory.R
 import com.example.shoestoreinventory.databinding.FragmentShoeListBinding
 import com.example.shoestoreinventory.databinding.ShoeListItemBinding
 import com.example.shoestoreinventory.models.PrefManager
@@ -24,10 +24,7 @@ class ShoeListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.fragment_shoe_list, container, false
-        )
+        binding = FragmentShoeListBinding.inflate(inflater, container, false)
         prefManager = PrefManager(requireContext())
         binding.viewmodel = viewModel
         observe()
@@ -66,11 +63,15 @@ class ShoeListFragment : Fragment() {
                 binding.shoeList,
                 false
             )
-            shoeBinding.ivShoeImage.setImageBitmap(shoe.image)
-            shoeBinding.tvShoeName.text = shoe.name
-            shoeBinding.tvShoeCompany.text = shoe.company
-            shoeBinding.tvShoeSize.text = shoe.size
-            shoeBinding.tvShoeDescription.text = shoe.description
+
+            with(shoeBinding) {
+
+                tvShoeName.text = shoe.name
+                tvShoeCompany.text = shoe.company
+                tvShoeSize.text = shoe.size
+                tvShoeDescription.text = shoe.description
+            }
+
             binding.shoeList.addView(shoeBinding.root)
         }
     }
@@ -89,8 +90,6 @@ class ShoeListFragment : Fragment() {
         }
         return super.onOptionsItemSelected(item)
     }
-
-
 
 
 }

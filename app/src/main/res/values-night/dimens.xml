@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="_8density">8dp</dimen>
+    <dimen name="_18density">18dp</dimen>
+    <dimen name="_25scaleable">25sp</dimen>
+    <dimen name="_18scaleable">18sp</dimen>
+</resources>
